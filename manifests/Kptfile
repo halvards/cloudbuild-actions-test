@@ -1,0 +1,16 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: cloudbuild-actions-test
+packageMetadata:
+  shortDescription: sample description
+openAPI:
+  definitions:
+    io.k8s.cli.setters.image:
+      description: container image
+      x-k8s-cli:
+        setter:
+          name: image
+          value: ko://github.com/halvards/cloudbuild-actions-test
+          setBy: package-default
+          required: true
