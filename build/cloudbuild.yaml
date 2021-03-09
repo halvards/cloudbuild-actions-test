@@ -84,6 +84,7 @@ steps:
     cp build/known_hosts.github /root/.ssh/known_hosts
     git config user.name "Cloud Build"
     git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
+    git config url.ssh://git@github.com/.pushInsteadOf https://github.com/
     git add manifests
     git commit -m "${TAG_NAME%%-rc*}"
     git push --force origin "release-${TAG_NAME%%-rc*}"
