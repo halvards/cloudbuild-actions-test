@@ -61,7 +61,7 @@ jobs:
     - name: Build binaries
       run: |
         GOOS=darwin GOARCH=amd64 go build -o cloudbuild-actions-test_Darwin_x86_64 .
-        GOOS=darwin GOARCH=arm64 go build -o cloudbuild-actions-test_Darwin_amd64 .
+        GOOS=darwin GOARCH=arm64 go build -o cloudbuild-actions-test_Darwin_arm64 .
         GOOS=linux GOARCH=amd64 go build -o cloudbuild-actions-test_Linux_x86_64 .
         GOOS=linux GOARCH=arm64 go build -o cloudbuild-actions-test_Linux_aarch64 .
 
