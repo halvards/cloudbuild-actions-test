@@ -87,9 +87,6 @@ steps:
     git push --force origin "release-${TAG_NAME%%-rc*}"
   secretEnv:
   - SSH_KEY
-  volumes:
-  - name: ssh
-    path: /root/.ssh
 
 substitutions:
   _KO_VERSION: '0.8.1'
