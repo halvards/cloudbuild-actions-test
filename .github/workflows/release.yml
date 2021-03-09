@@ -88,7 +88,7 @@ jobs:
 
         GitHub Packages:
 
-            docker.pkg.github.com/$IMAGE_REPO/$IMAGE_NAME:$TAG_NAME (linux/amd64)
+            docker.pkg.github.com/$IMAGE_REPO/$IMAGE_NAME:$VERSION (linux/amd64)
 
             Digest: ${IMAGE_WITH_DIGEST##*@}
         EOF
@@ -99,8 +99,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ env.TAG_NAME }}
-        release_name: ${{ env.TAG_NAME }}
+        tag_name: ${{ env.VERSION }}
+        release_name: ${{ env.VERSION }}
         body_path: ${{ runner.temp }}/body.md
         commitish: ${{ env.COMMITISH }}
 
