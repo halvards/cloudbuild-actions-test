@@ -79,21 +79,34 @@ jobs:
     - name: Build and push container image
       run: |
         $(go env GOPATH)/bin/ko login docker.pkg.github.com -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-        echo -n 'IMAGE_WITH_DIGEST=' >> $GITHUB_ENV
+        echo -n 'GITHUB_IMAGE_NAME_WITH_DIGEST=' >> $GITHUB_ENV
         $(go env GOPATH)/bin/ko publish . --base-import-paths --platform linux/amd64 --tags latest,$VERSION >> $GITHUB_ENV
       env:
         KO_DOCKER_REPO: docker.pkg.github.com/${{ env.IMAGE_REPO }}
+
+    - name: Install crane
+      run: |
+        mkdir -p $(go env GOPATH)/bin
+        curl -sSL "https://github.com/google/go-containerregistry/releases/download/v0.4.1/go-containerregistry_Linux_x86_64.tar.gz" | tar -xzC $(go env GOPATH)/bin crane
+
+    - name: Get GCR image digest
+      run: |
+        echo -n 'GCR_IMAGE_DIGEST=' >> $GITHUB_ENV
+        $(go env GOPATH)/bin/crane digest gcr.io/cloud-solutions-images/gatekeeper-securitycenter:$VERSION >> $GITHUB_ENV
 
     - name: Create release body file
       run: |
         cat << EOF > ${{ runner.temp }}/body.md
         ## Images
 
-        GitHub Packages:
+        Google Container Registry (multi-platform):
 
-            docker.pkg.github.com/$IMAGE_REPO/$IMAGE_NAME:$VERSION (linux/amd64)
+            gcr.io/PROJECT_ID/cloudbuild-actions-test:$VERSION@$GCR_IMAGE_DIGEST
 
-            Digest: ${IMAGE_WITH_DIGEST##*@}
+        GitHub Packages (`linux/amd64`):
+
+            docker.pkg.github.com/$IMAGE_REPO/$IMAGE_NAME:$VERSION
+            Digest: ${GITHUB_IMAGE_NAME_WITH_DIGEST##*@}
         EOF
 
     - name: Create release
