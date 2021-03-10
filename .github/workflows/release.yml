@@ -96,7 +96,7 @@ jobs:
 
     - name: Create release body file
       run: |
-        cat << EOF > ${{ runner.temp }}/body.md
+        cat << "EOF" > ${{ runner.temp }}/body.md
         ## Images
 
         Google Container Registry (multi-platform):
@@ -107,7 +107,7 @@ jobs:
 
             docker.pkg.github.com/$IMAGE_REPO/$IMAGE_NAME:$VERSION
             Digest: ${GITHUB_IMAGE_NAME_WITH_DIGEST##*@}
-        EOF
+        "EOF"
 
     - name: Create release
       id: create_release
