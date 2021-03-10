@@ -16,6 +16,14 @@ steps:
   name: gcr.io/cloud-builders/go
   args:
   - env
+- id: build
+  name: gcr.io/cloud-builders/go
+  args:
+  - build
+  - -v
+  - .
+  env:
+  - 'CGO_ENABLED=0'
 - id: test
   name: gcr.io/cloud-builders/go
   args:
@@ -27,12 +35,6 @@ steps:
   - -timeout=1m
   - -vet=asmdecl,assign,atomic,bools,buildtag,cgocall,composites,copylocks,errorsas,httpresponse,loopclosure,lostcancel,nilfunc,printf,shift,stdmethods,structtag,tests,unmarshal,unreachable,unsafeptr,unusedresult
   - ./...
-- id: build
-  name: gcr.io/cloud-builders/go
-  args:
-  - build
-  - -v
-  - .
 - id: ko
   name: gcr.io/cloud-builders/curl
   entrypoint: sh
