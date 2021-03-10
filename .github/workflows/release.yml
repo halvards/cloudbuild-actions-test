@@ -84,24 +84,10 @@ jobs:
       env:
         KO_DOCKER_REPO: docker.pkg.github.com/${{ env.IMAGE_REPO }}
 
-    - name: Install crane
-      run: |
-        mkdir -p $(go env GOPATH)/bin
-        curl -sSL "https://github.com/google/go-containerregistry/releases/download/v0.4.1/go-containerregistry_Linux_x86_64.tar.gz" | tar -xzC $(go env GOPATH)/bin crane
-
-    - name: Get GCR image digest
-      run: |
-        echo -n 'GCR_IMAGE_DIGEST=' >> $GITHUB_ENV
-        $(go env GOPATH)/bin/crane digest gcr.io/cloud-solutions-images/gatekeeper-securitycenter:$VERSION >> $GITHUB_ENV
-
     - name: Create release body file
       run: |
         cat << EOF > ${{ runner.temp }}/body.md
         ## Images
-
-        Google Container Registry (multi-platform):
-
-            gcr.io/PROJECT_ID/cloudbuild-actions-test:$VERSION@$GCR_IMAGE_DIGEST
 
         GitHub Packages (\`linux/amd64\`):
 
@@ -169,3 +155,18 @@ jobs:
         asset_path: SHA256SUMS
         asset_name: SHA256SUMS
         asset_content_type: text/plain
+
+    - name: Update version in readme
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git checkout main
+        git reset --hard
+        git fetch origin main
+        git merge --strategy-option=theirs main
+        sed -i~ "s/VERSION=.*/VERSION=$TAG_NAME/" README.md
+        git add README.md
+        git commit -m "Update readme to version $TAG_NAME"
+        git fetch origin main
+        git rebase --strategy-option=theirs main
+        git push origin main
