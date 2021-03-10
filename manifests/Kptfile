@@ -11,6 +11,7 @@ openAPI:
       x-k8s-cli:
         setter:
           name: image
-          value: ko://github.com/halvards/cloudbuild-actions-test
-          setBy: package-default
+          value: gcr.io/halvard-193600/cloudbuild-actions-test@sha256:1b222c446b98c951072022077ba187051c0573914fc7c9e405975562cf6dbde4
+          setBy: cloudbuild
           required: true
+          isSet: true
