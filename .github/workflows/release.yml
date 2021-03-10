@@ -96,18 +96,18 @@ jobs:
 
     - name: Create release body file
       run: |
-        cat << "EOF" > ${{ runner.temp }}/body.md
+        cat << EOF > ${{ runner.temp }}/body.md
         ## Images
 
         Google Container Registry (multi-platform):
 
             gcr.io/PROJECT_ID/cloudbuild-actions-test:$VERSION@$GCR_IMAGE_DIGEST
 
-        GitHub Packages (`linux/amd64`):
+        GitHub Packages (\`linux/amd64\`):
 
             docker.pkg.github.com/$IMAGE_REPO/$IMAGE_NAME:$VERSION
             Digest: ${GITHUB_IMAGE_NAME_WITH_DIGEST##*@}
-        "EOF"
+        EOF
 
     - name: Create release
       id: create_release
