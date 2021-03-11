@@ -5,4 +5,4 @@ metadata:
 spec:
   containers:
   - name: hello
-    image: ko://github.com/halvards/cloudbuild-actions-test # {"$kpt-set":"image"}
+    image: gcr.io/halvard-193600/cloudbuild-actions-test@sha256:bac81fe4f8d3d812e094dd41a1b968eeaf481f3ec84d47fafdab116933500f80 # {"$kpt-set":"image"}
