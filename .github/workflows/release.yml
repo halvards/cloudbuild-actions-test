@@ -166,6 +166,6 @@ jobs:
         git pull --no-edit --no-rebase --strategy-option=theirs origin
         sed -i~ "s/VERSION=.*/VERSION=$VERSION/" README.md
         git add README.md
-        git commit -m "Update readme to version $VERSION"
+        git commit -m "Update version in readme to $VERSION"
         git pull --no-edit --no-rebase --strategy-option=ours origin
         git push origin main
