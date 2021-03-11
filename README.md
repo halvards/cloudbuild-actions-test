@@ -1,13 +1,13 @@
 # cloudbuild-actions-test
 
 Test with Cloud Build and GitHub Actions.
-
+foo
 ## Install
 
 Download the binary for your platform:
 
 ```bash
-VERSION=$(curl -s https://api.github.com/repos/halvards/cloudbuild-actions-test/releases/latest | jq -r '.tag_name')
+VERSION=v0.1.9
 
 curl -Lo cloudbuild-actions-test "https://github.com/halvards/cloudbuild-actions-test/releases/download/$VERSION/cloudbuild-actions-test_$(uname -s)_$(uname -m)"
 
