@@ -167,7 +167,7 @@ jobs:
         git merge --strategy-option=theirs main
         sed -i~ "s/VERSION=.*/VERSION=$TAG_NAME/" README.md
         git add README.md
-        git commit -m "Update readme to version $TAG_NAME"
+        git commit -m "Update readme to version $VERSION"
         git fetch origin
         git rebase --strategy-option=theirs main
         git push origin main
