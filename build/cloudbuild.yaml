@@ -103,8 +103,8 @@ steps:
   - SSH_KEY
 
 substitutions:
-  _KO_VERSION: '0.8.1'
-  _KPT_VERSION: '0.38.1'
+  _KO_VERSION: '0.8.2'
+  _KPT_VERSION: '0.39.2'
   _IMAGE_REPO: gcr.io/$PROJECT_ID
   _SECRET_NAME: projects/$PROJECT_ID/secrets/$REPO_NAME-deploy-key/versions/latest
 
