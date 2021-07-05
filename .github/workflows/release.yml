@@ -74,25 +74,24 @@ jobs:
     - name: Install ko
       run: |
         mkdir -p $(go env GOPATH)/bin
-        curl -sSL "https://github.com/google/ko/releases/download/v0.8.2/ko_0.8.2_Linux_x86_64.tar.gz" | tar -xzC $(go env GOPATH)/bin ko
+        curl -sSL "https://github.com/google/ko/releases/download/v0.8.3/ko_0.8.3_Linux_x86_64.tar.gz" | tar -xzC $(go env GOPATH)/bin ko
 
     - name: Build and push container image
       run: |
-        $(go env GOPATH)/bin/ko login docker.pkg.github.com -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+        $(go env GOPATH)/bin/ko login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
         echo -n 'GITHUB_IMAGE_NAME_WITH_DIGEST=' >> $GITHUB_ENV
         $(go env GOPATH)/bin/ko publish . --base-import-paths --platform linux/amd64 --tags latest,$VERSION >> $GITHUB_ENV
       env:
-        KO_DOCKER_REPO: docker.pkg.github.com/${{ env.IMAGE_REPO }}
+        KO_DOCKER_REPO: ghcr.io/${{ env.IMAGE_REPO }}
 
     - name: Create release body file
       run: |
         cat << EOF > ${{ runner.temp }}/body.md
         ## Images
 
-        GitHub Packages (\`linux/amd64\`):
+        GitHub Container Registry:
 
-            docker.pkg.github.com/$IMAGE_REPO/$IMAGE_NAME:$VERSION
-            Digest: ${GITHUB_IMAGE_NAME_WITH_DIGEST##*@}
+            ghcr.io/$IMAGE_REPO/$IMAGE_NAME:$VERSION@${GITHUB_IMAGE_NAME_WITH_DIGEST##*@}
         EOF
 
     - name: Create release
