@@ -80,7 +80,7 @@ jobs:
       run: |
         $(go env GOPATH)/bin/ko login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
         echo -n 'GITHUB_IMAGE_NAME_WITH_DIGEST=' >> $GITHUB_ENV
-        $(go env GOPATH)/bin/ko publish . --base-import-paths --platform linux/amd64 --tags latest,$VERSION >> $GITHUB_ENV
+        $(go env GOPATH)/bin/ko publish . --base-import-paths --platform linux/amd64,linux/arm64 --tags latest,$VERSION >> $GITHUB_ENV
       env:
         KO_DOCKER_REPO: ghcr.io/${{ env.IMAGE_REPO }}
 
